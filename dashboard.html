@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><title>Panel</title></head>
+<body>
+  <h2>Bienvenido al Panel de Stock</h2>
+  <a href="/logout">Cerrar sesión</a>
+  <h3>Productos</h3>
+  <ul>
+    {% for p in products %}
+      <li>{{ p.name }} - {{ p.quantity }}</li>
+    {% endfor %}
+  </ul>
+  <h3>Agregar Producto</h3>
+  <form method="post" action="/add_product">
+    Nombre: <input type="text" name="name"><br>
+    Cantidad: <input type="number" name="quantity"><br>
+    <input type="submit" value="Agregar">
+  </form>
+</body>
+</html>
