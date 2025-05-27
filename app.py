@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, redirect, session
+from flask import jsonify
+
 app = Flask(__name__)
 app.secret_key = 'supersecret'
 
@@ -39,6 +41,16 @@ def add_product():
 def logout():
     session.pop('user', None)
     return redirect('/')
+@app.route('/api/add_product', methods=['POST'])
+def api_add_product():
+    data = request.get_json()
+    name = data.get('name')
+    quantity = data.get('quantity')
+    if name and quantity:
+        products.append({'name': name, 'quantity': quantity})
+        return jsonify({'status': 'success', 'message': 'Producto agregado vía API'}), 201
+    else:
+        return jsonify({'status': 'error', 'message': 'Faltan datos'}), 400
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=81)
